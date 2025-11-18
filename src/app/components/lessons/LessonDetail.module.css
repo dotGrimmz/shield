@@ -1,0 +1,289 @@
+.container {
+  padding: var(--space-3);
+  padding-bottom: calc(var(--space-6) + 60px);
+  min-height: 100vh;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+}
+
+.spinningLoader {
+  animation: spin 1s linear infinite;
+  color: var(--accent-primary);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.backButton:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateX(-2px);
+}
+
+.headerContent {
+  flex: 1;
+}
+
+.category {
+  display: inline-block;
+  padding: 4px var(--space-1);
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--accent-primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.headerContent h1 {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.completeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.actionButton:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.section {
+  animation: slideUp 0.4s ease;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.sectionIcon {
+  color: var(--accent-primary);
+}
+
+.sectionHeader h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.claimText {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.counterCard {
+  border-left: 4px solid var(--color-crimson);
+  background: var(--bg-tertiary);
+}
+
+.counterCard p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.scripturalCard {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, var(--bg-secondary) 100%);
+  border-left: 4px solid var(--accent-primary);
+}
+
+.responseText {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: var(--space-4);
+}
+
+.verses {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.verse {
+  padding: var(--space-3);
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent-primary);
+}
+
+.verse strong {
+  display: block;
+  color: var(--accent-primary);
+  margin-bottom: var(--space-1);
+  font-size: 0.875rem;
+}
+
+.verse p {
+  margin: 0;
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.theologianQuote {
+  margin-bottom: var(--space-3);
+}
+
+.theologianQuote cite {
+  display: block;
+  margin-top: var(--space-2);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.askShieldBubble {
+  position: fixed;
+  bottom: calc(60px + var(--space-3));
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: 50px;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 100;
+}
+
+.askShieldBubble:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.askShieldBubble span {
+  font-weight: 600;
+}
+
+.noteEditor {
+  position: fixed;
+  bottom: calc(60px + var(--space-3));
+  right: var(--space-3);
+  width: calc(100% - var(--space-6));
+  max-width: 400px;
+  z-index: 200;
+}
+
+.noteEditor h3 {
+  font-size: 1.125rem;
+  margin-bottom: var(--space-2);
+}
+
+.noteTextarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--space-2);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  resize: vertical;
+  margin-bottom: var(--space-2);
+}
+
+.noteTextarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.noteActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: var(--space-6);
+    padding-left: calc(280px + var(--space-6));
+  }
+  
+  .headerContent h1 {
+    font-size: 2.5rem;
+  }
+  
+  .askShieldBubble {
+    bottom: var(--space-3);
+  }
+  
+  .noteEditor {
+    bottom: var(--space-3);
+  }
+}

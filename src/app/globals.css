@@ -1,42 +1,259 @@
+/* SHIELD Brand Colors - Academic + Tactical */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base Colors */
+  --deep-navy: #0B132B;
+  --steel-gray: #A1A1AA;
+  --iron-red: #7F1D1D;
+  --slate-dark: #1E293B;
+  --parchment: #F8FAFC;
+  --color-navy: #0B132B;
+  --color-dark: #111827;
+  --color-crimson: #B91C1C;
+
+  /* Spacing Scale */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(11, 19, 43, 0.08);
+  --shadow-md: 0 8px 20px rgba(11, 19, 43, 0.12);
+  --shadow-lg: 0 18px 35px rgba(11, 19, 43, 0.18);
+  --shadow-xl: 0 28px 60px rgba(11, 19, 43, 0.25);
+
+  /* Transitions */
+  --transition-fast: 180ms ease;
+  --transition-slow: 320ms ease;
+
+  /* Typography */
+  --font-display: 'Playfair Display', 'Merriweather', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Misc */
+  --overlay: rgba(11, 19, 43, 0.55);
+  --text-inverse: #FFFFFF;
+
+  /* Theme: Light (Default) */
+  --bg-primary: var(--parchment);
+  --bg-secondary: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-tertiary: #F1F5F9;
+  --text-primary: var(--deep-navy);
+  --text-secondary: #475569;
+  --text-muted: var(--steel-gray);
+  --border-color: #E2E8F0;
+  --accent-primary: var(--iron-red);
+  --accent-secondary: var(--deep-navy);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+[data-theme="dark"] {
+  --bg-primary: var(--deep-navy);
+  --bg-secondary: var(--slate-dark);
+  --bg-elevated: #334155;
+  --bg-tertiary: #1F2937;
+  --text-primary: var(--parchment);
+  --text-secondary: #CBD5E1;
+  --text-muted: var(--steel-gray);
+  --border-color: #475569;
+  --accent-primary: #991B1B;
+  --accent-secondary: var(--steel-gray);
+  --text-inverse: #0B132B;
+}
+
+[data-theme="emerald"] {
+  --bg-primary: #064E3B;
+  --bg-secondary: #065F46;
+  --bg-elevated: #047857;
+  --bg-tertiary: #03624B;
+  --text-primary: #ECFDF5;
+  --text-secondary: #D1FAE5;
+  --text-muted: #A7F3D0;
+  --border-color: #059669;
+  --accent-primary: #10B981;
+  --accent-secondary: #6EE7B7;
+}
+
+[data-theme="crimson"] {
+  --bg-primary: #450A0A;
+  --bg-secondary: #7F1D1D;
+  --bg-elevated: #991B1B;
+  --bg-tertiary: #7F1D1D;
+  --text-primary: #FEE2E2;
+  --text-secondary: #FECACA;
+  --text-muted: #FCA5A5;
+  --border-color: #B91C1C;
+  --accent-primary: #DC2626;
+  --accent-secondary: #EF4444;
+}
+
+/* Typography System */
+@font-face {
+  font-family: 'Merriweather';
+  src: local('Merriweather');
+  font-display: swap;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-tiny {
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* Animation Keyframes */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
   }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes slideUpPanel {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Utility Classes */
+.anim-slide-up {
+  animation: slideUp 250ms ease-out;
+}
+
+.anim-slide-in-right {
+  animation: slideInRight 200ms ease-out;
+}
+
+.anim-fade-in {
+  animation: fadeIn 150ms ease-in;
+}
+
+.tactical-border {
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.tactical-border::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--accent-primary);
+}
+
+.scripture-highlight {
+  background-color: var(--bg-elevated);
+  border-left: 4px solid var(--accent-primary);
+  padding: 16px;
+  border-radius: 4px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--steel-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }

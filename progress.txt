@@ -1,0 +1,23 @@
+Progress Update - SHIELD App
+
+Completed:
+- Added Firebase initialization module that exports shared auth/db/storage instances for the app.
+- Replaced the starter Next.js page with the SHIELD experience shell, wiring onboarding, auth, dashboard, lessons, Ask Shield, and profile flows.
+- Exposed the Context Builder via navigation and dashboard quick actions, integrating it into the main routing state machine.
+- Integrated Firebase Auth (email/password, Google, and guest) plus `onAuthStateChanged` so the shell reacts to real sessions.
+- Replaced mock dashboard/lessons/profile data with Firestore subscriptions for `lessons` and `users/{uid}`, including lesson detail fetching.
+- Added pending dependencies (`lucide-react`, `tailwindcss`) and removed the unused Tailwind import from `globals.css` to unblock the Next.js build.
+- Declared the `motion` package dependency so motion-based components resolve at build time.
+- Removed the unused Tailwind-based `components/ui` and `components/figma` directories and dropped Tailwind dependencies to ensure the app is purely CSS-module driven.
+- Restored the design token custom properties (spacing, radii, shadows, etc.) in `globals.css` so CSS Modules render with the intended Figma spacing/visual system.
+- Hooked lesson notes and Ask Shield “Add to Notes” actions into Firestore via `arrayUnion`, so user notes persist across sessions and display in the Profile tab.
+- Track lesson progress in Firestore: opening a lesson records in-progress state, and the “Mark Complete” action in Lesson Detail updates progress so dashboard + lesson cards reflect real study history.
+- Persisted onboarding + theme state via localStorage and Firestore so returning users skip onboarding immediately and their preferred theme applies before Firebase hydration.
+- Added a `UserProvider` context that listens to Firebase Auth + `profiles/{uid}`, exposing `useUser()` for idiomatic access to `{ user, profile, loading, refreshProfile, logout }` across the app.
+
+Planned Next Steps:
+- Add integration tests or runtime checks once Firebase connections are stable to validate onboarding → auth → lessons → notes flows.
+
+Latest Note:
+- With onboarding/theme persistence done, next up is test coverage—start with `npm run lint`/`npm run dev`, then consider Playwright or Cypress flows once backend data is solid.
+- Testing tip: run `npm run lint` and `npm run dev` locally (after `npm install`) to ensure TypeScript types check out, Firebase calls succeed with your env vars, and note/progress updates appear in Firestore.

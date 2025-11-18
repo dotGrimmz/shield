@@ -1,0 +1,106 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  position: relative;
+}
+
+.skipButton {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  padding: var(--space-1) var(--space-2);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.skipButton:hover {
+  color: var(--accent-primary);
+}
+
+.content {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 400px;
+  justify-content: center;
+}
+
+.iconContainer {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  margin-bottom: var(--space-3);
+}
+
+.icon {
+  color: var(--text-inverse);
+}
+
+.slide h1 {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.slide p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 500px;
+}
+
+.dots {
+  display: flex;
+  gap: var(--space-1);
+  justify-content: center;
+  margin: var(--space-4) 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.activeDot {
+  background: var(--accent-primary);
+  width: 30px;
+  border-radius: 5px;
+}
+
+.nextButton {
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (min-width: 768px) {
+  .slide h1 {
+    font-size: 2.5rem;
+  }
+  
+  .slide p {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,215 @@
+.container {
+  padding: var(--space-3);
+  padding-bottom: calc(var(--space-6) + 60px);
+  min-height: 100vh;
+}
+
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.header h1 {
+  font-size: 2rem;
+  margin-bottom: var(--space-1);
+}
+
+.header p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.mainLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.diagramCard {
+  min-height: 500px;
+  position: relative;
+  overflow: auto;
+  background: var(--bg-primary);
+}
+
+.diagram {
+  position: relative;
+  width: 800px;
+  height: 400px;
+  margin: var(--space-4);
+}
+
+.connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 150px;
+  box-shadow: var(--shadow-sm);
+}
+
+.node:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-primary);
+}
+
+.selectedNode {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-md);
+  transform: scale(1.05);
+}
+
+.nodeIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.nodeContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.nodeLabel {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nodeType {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.sidebar {
+  animation: slideInRight 0.3s ease;
+}
+
+.detailHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.detailIcon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.detailHeader h3 {
+  font-size: 1.25rem;
+  margin: 0 0 4px 0;
+}
+
+.detailType {
+  display: inline-block;
+  padding: 2px var(--space-1);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.detailDescription {
+  line-height: 1.8;
+  margin: 0;
+}
+
+.legend {
+  background: var(--bg-secondary);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.legend h3 {
+  font-size: 1.125rem;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-body);
+}
+
+.legendItems {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-2);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legendColor {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.legendItem span {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: var(--space-6);
+    padding-left: calc(280px + var(--space-6));
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .mainLayout {
+    grid-template-columns: 1fr 300px;
+  }
+  
+  .diagram {
+    width: 900px;
+    height: 450px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .diagram {
+    width: 1000px;
+    height: 500px;
+  }
+}
