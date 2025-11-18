@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "firebase": "^12.6.0",
     "gsap": "^3.13.0",
     "lucide-react": "^0.474.0",

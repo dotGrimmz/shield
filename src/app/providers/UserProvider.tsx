@@ -1,15 +1,10 @@
 'use client';
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { auth, db } from '@/lib/firebase';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { ensureProfileDoc, getProfile } from '@/lib/firestore/profile';
 
 interface UserProfile {
   name?: string;
@@ -35,8 +30,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   const fetchProfile = useCallback(async (uid: string) => {
-    const snapshot = await getDoc(doc(db, 'profiles', uid));
-    setProfile((snapshot.data() as UserProfile) ?? null);
+    const data = await getProfile(uid);
+    setProfile(data ?? null);
   }, []);
 
   useEffect(() => {
@@ -57,19 +52,29 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       setLoading(true);
-      const profileRef = doc(db, 'profiles', firebaseUser.uid);
+      try {
+        await ensureProfileDoc(firebaseUser.uid, {
+          name: firebaseUser.displayName || firebaseUser.email || 'Believer',
+          email: firebaseUser.email ?? '',
+        });
+        const profileRef = doc(db, 'profiles', firebaseUser.uid);
 
-      unsubscribeProfile = onSnapshot(
-        profileRef,
-        (snapshot) => {
-          setProfile((snapshot.data() as UserProfile) ?? null);
-          setLoading(false);
-        },
-        async () => {
-          await fetchProfile(firebaseUser.uid);
-          setLoading(false);
-        }
-      );
+        unsubscribeProfile = onSnapshot(
+          profileRef,
+          (snapshot) => {
+            setProfile((snapshot.data() as UserProfile) ?? null);
+            setLoading(false);
+          },
+          async (error) => {
+            console.error('Profile listener error', error);
+            await fetchProfile(firebaseUser.uid);
+            setLoading(false);
+          }
+        );
+      } catch (error) {
+        console.error('Failed to prepare profile document', error);
+        setLoading(false);
+      }
     });
 
     return () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, BookOpen, MessageCircle, StickyNote, User, GitBranch } from 'lucide-react';
+import { Home, BookOpen, MessageCircle, StickyNote, User } from 'lucide-react';
 import styles from './Navigation.module.css';
 
 interface NavigationProps {
@@ -12,7 +12,6 @@ export const Navigation: React.FC<NavigationProps> = ({ activeRoute, onNavigate 
     { id: 'home', label: 'Home', icon: Home },
     { id: 'lessons', label: 'Lessons', icon: BookOpen },
     { id: 'ask-shield', label: 'Ask Shield', icon: MessageCircle },
-    { id: 'context-builder', label: 'Context', icon: GitBranch },
     { id: 'notes', label: 'Notes', icon: StickyNote },
     { id: 'profile', label: 'Profile', icon: User },
   ];

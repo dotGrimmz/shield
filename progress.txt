@@ -14,6 +14,8 @@ Completed:
 - Track lesson progress in Firestore: opening a lesson records in-progress state, and the “Mark Complete” action in Lesson Detail updates progress so dashboard + lesson cards reflect real study history.
 - Persisted onboarding + theme state via localStorage and Firestore so returning users skip onboarding immediately and their preferred theme applies before Firebase hydration.
 - Added a `UserProvider` context that listens to Firebase Auth + `profiles/{uid}`, exposing `useUser()` for idiomatic access to `{ user, profile, loading, refreshProfile, logout }` across the app.
+- Added Firestore data-layer helpers for lessons, notes, and profiles to keep components thin and consistent (see `src/lib/firestore/*`).
+- Integrated those helpers into the UI so lessons, notes, and profiles now use the shared data layer instead of ad-hoc Firestore calls.
 
 Planned Next Steps:
 - Add integration tests or runtime checks once Firebase connections are stable to validate onboarding → auth → lessons → notes flows.

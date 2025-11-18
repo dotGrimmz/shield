@@ -106,7 +106,10 @@ export const ContextBuilder: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <header className={styles.header}>
-          <h1>Context Builder</h1>
+          <div className={styles.deprecation}>
+            <strong>Deprecated Feature:</strong> This visualization is archived and no longer maintained. Please rely on the core lessons and notes experience for current apologetics study paths.
+          </div>
+          <h1>Context Builder (Deprecated)</h1>
           <p>Visualize the relationships between Scripture, claims, and theological insights</p>
         </header>
 

@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import { ArrowLeft, BookOpen, MessageCircle, StickyNote, Loader, CheckCircle } from 'lucide-react';
-import { Button } from '../common/Button';
-import { Card } from '../common/Card';
-import styles from './LessonDetail.module.css';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import {
+  ArrowLeft,
+  BookOpen,
+  MessageCircle,
+  StickyNote,
+  Loader,
+  CheckCircle,
+} from "lucide-react";
+import { Button } from "../common/Button";
+import { Card } from "../common/Card";
+import styles from "./LessonDetail.module.css";
+import { db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 interface LessonDetailProps {
   lessonId: string;
@@ -15,15 +22,18 @@ interface LessonDetailProps {
   onCompleteLesson: (lessonId: string) => Promise<void>;
 }
 
+type SectionType = "claim" | "counter" | "scripture";
+
+interface LessonSection {
+  type: SectionType;
+  content: string;
+  order: number;
+}
+
 interface LessonContent {
   title: string;
   category?: string;
-  claim?: string;
-  counterArgument?: string;
-  scripturalResponse?: {
-    text: string;
-    verses: Array<{ reference: string; text: string }>;
-  };
+  sections?: LessonSection[];
   theologianInsights?: Array<{ name: string; quote: string }>;
 }
 
@@ -38,25 +48,26 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
   const [lesson, setLesson] = useState<LessonContent | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showNoteEditor, setShowNoteEditor] = useState(false);
-  const [note, setNote] = useState('');
+  const [note, setNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
   const [completing, setCompleting] = useState(false);
 
+  console.log({ lesson });
   useEffect(() => {
     const fetchLesson = async () => {
       setLoading(true);
       setError(null);
       try {
-        const lessonSnapshot = await getDoc(doc(db, 'lessons', lessonId));
+        const lessonSnapshot = await getDoc(doc(db, "lessons", lessonId));
         if (!lessonSnapshot.exists()) {
-          setError('Lesson not found. Please choose another lesson.');
+          setError("Lesson not found. Please choose another lesson.");
           setLesson(null);
         } else {
           setLesson(lessonSnapshot.data() as LessonContent);
         }
       } catch (err) {
-        console.error('Failed to load lesson', err);
-        setError('Unable to load this lesson. Please try again later.');
+        console.error("Failed to load lesson", err);
+        setError("Unable to load this lesson. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -74,9 +85,9 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
         tags: lesson?.category ? [lesson.category] : undefined,
       });
       setShowNoteEditor(false);
-      setNote('');
+      setNote("");
     } catch (err) {
-      console.error('Failed to save note', err);
+      console.error("Failed to save note", err);
     } finally {
       setSavingNote(false);
     }
@@ -87,7 +98,7 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
     try {
       await onCompleteLesson(lessonId);
     } catch (err) {
-      console.error('Failed to mark complete', err);
+      console.error("Failed to mark complete", err);
     } finally {
       setCompleting(false);
     }
@@ -118,6 +129,19 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
   }
 
   if (!lesson) return null;
+  const sortedSections = [...(lesson.sections ?? [])].sort(
+    (a, b) => a.order - b.order
+  );
+  console.log({ sortedSections });
+  const claimSection = sortedSections.find(
+    (section) => section.type === "claim"
+  );
+  const counterSection = sortedSections.find(
+    (section) => section.type === "counter"
+  );
+  const scriptureSection = sortedSections.find(
+    (section) => section.type === "scripture"
+  );
 
   return (
     <div className={styles.container}>
@@ -128,11 +152,13 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
             <ArrowLeft size={24} />
           </button>
           <div className={styles.headerContent}>
-            <span className={styles.category}>{lesson.category || 'Doctrine'}</span>
+            <span className={styles.category}>
+              {lesson.category || "Doctrine"}
+            </span>
             <h1>{lesson.title}</h1>
           </div>
           <div className={styles.actions}>
-            <button 
+            <button
               className={styles.actionButton}
               onClick={() => setShowNoteEditor(!showNoteEditor)}
             >
@@ -146,13 +172,13 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
               className={styles.completeButton}
             >
               <CheckCircle size={16} />
-              {completing ? 'Saving...' : 'Mark Complete'}
+              {completing ? "Saving..." : "Mark Complete"}
             </Button>
           </div>
         </header>
 
         {/* Main Content */}
-        <motion.div 
+        <motion.div
           className={styles.sections}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -170,7 +196,9 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
               <h2>The Claim</h2>
             </div>
             <Card>
-              <p className={styles.claimText}>{lesson.claim || 'Detailed claim content coming soon.'}</p>
+              <p className={styles.claimText}>
+                {claimSection?.content || "Detailed claim content coming soon."}
+              </p>
             </Card>
           </motion.section>
 
@@ -185,7 +213,10 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
               <h2>Common Objection</h2>
             </div>
             <Card className={styles.counterCard}>
-              <p>{lesson.counterArgument || 'No objection recorded for this lesson yet.'}</p>
+              <p>
+                {counterSection?.content ||
+                  "No objection recorded for this lesson yet."}
+              </p>
             </Card>
           </motion.section>
 
@@ -201,21 +232,9 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
             </div>
             <Card className={styles.scripturalCard}>
               <p className={styles.responseText}>
-                {lesson.scripturalResponse?.text || 'Add scriptural commentary for this lesson.'}
+                {scriptureSection?.content ||
+                  "Add scriptural commentary for this lesson."}
               </p>
-
-              <div className={styles.verses}>
-                {lesson.scripturalResponse?.verses?.length ? (
-                  lesson.scripturalResponse.verses.map((verse, index) => (
-                    <div key={index} className={styles.verse}>
-                      <strong>{verse.reference}</strong>
-                      <p>"{verse.text}"</p>
-                    </div>
-                  ))
-                ) : (
-                  <p className={styles.responseText}>Add supporting verses to reinforce this defense.</p>
-                )}
-              </div>
             </Card>
           </motion.section>
 
@@ -231,7 +250,11 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
             </div>
             {lesson.theologianInsights?.length ? (
               lesson.theologianInsights.map((insight, index) => (
-                <Card key={index} variant="quote" className={styles.theologianQuote}>
+                <Card
+                  key={index}
+                  variant="quote"
+                  className={styles.theologianQuote}
+                >
                   <p>{insight.quote}</p>
                   <cite>— {insight.name}</cite>
                 </Card>
@@ -245,9 +268,9 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
         </motion.div>
 
         {/* Ask Shield Bubble */}
-        <button 
+        <button
           className={styles.askShieldBubble}
-          onClick={() => onAskShield('Tell me more about ' + lesson.title)}
+          onClick={() => onAskShield("Tell me more about " + lesson.title)}
         >
           <MessageCircle size={24} />
           <span>Ask Shield</span>
@@ -269,11 +292,21 @@ export const LessonDetail: React.FC<LessonDetailProps> = ({
                 className={styles.noteTextarea}
               />
               <div className={styles.noteActions}>
-                <Button variant="ghost" size="sm" onClick={() => setShowNoteEditor(false)} disabled={savingNote}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowNoteEditor(false)}
+                  disabled={savingNote}
+                >
                   Cancel
                 </Button>
-                <Button variant="primary" size="sm" onClick={handleSaveNote} disabled={savingNote || !note.trim()}>
-                  {savingNote ? 'Saving...' : 'Save Note'}
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleSaveNote}
+                  disabled={savingNote || !note.trim()}
+                >
+                  {savingNote ? "Saving..." : "Save Note"}
                 </Button>
               </div>
             </Card>

@@ -7,11 +7,13 @@
 
 .stage {
   min-height: 100vh;
+  padding: 24px 16px 112px;
+  transition: padding 200ms ease;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 24px 16px 112px;
-  margin-left: 0;
-  transition: margin-left 200ms ease;
+  gap: 24px;
 }
 
 .header {
@@ -91,14 +93,13 @@
 
 @media (min-width: 768px) {
   .stage {
-    margin-left: 280px;
-    width: calc(100% - 280px);
-    padding: 40px 48px 40px;
+    padding: 40px 48px 64px;
+    padding-left: calc(220px + 32px);
   }
 
   .header {
     flex-direction: row;
     align-items: center;
-    margin-bottom: 32px;
+    gap: 32px;
   }
 }
